@@ -1,0 +1,298 @@
+@import url("../static/animate-custom.css");
+@themeOne: #C0DAFF;
+@themeTwo: #3A577F;
+@themeThree: #606E7F;
+@themeFour: #5D8FCC;
+@themeMain: #74ADFF;
+
+/* Fonts! */
+
+@font-face {
+    font-family: 'cantarellregular';
+    src: url('../fonts/cantarell-regular-webfont.eot');
+    src: url('../fonts/cantarell-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/cantarell-regular-webfont.woff') format('woff'),
+         url('../fonts/cantarell-regular-webfont.ttf') format('truetype'),
+         url('../fonts/cantarell-regular-webfont.svg#cantarellregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'danielregular';
+    src: url('../fonts/daniel-webfont.eot');
+    src: url('../fonts/daniel-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/daniel-webfont.woff') format('woff'),
+         url('../fonts/daniel-webfont.ttf') format('truetype'),
+         url('../fonts/daniel-webfont.svg#danielregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@backgroundTexture: url('../images/dark_wall.png');
+
+
+/*Mixins! */
+
+
+.RoundedShape(@radius:@defaultRadius){
+    -webkit-border-radius:@radius;
+       -moz-border-radius:@radius;
+            border-radius:@radius;
+}
+
+@shadowColor: #000;
+@shadowSpread: 5px;
+@shadowBlur: 5px;
+@shadowColor2: @themeThree;
+@shadowSpread2: 3px;
+@shadowBlur2:3px;
+.LightShadow{
+   -moz-box-shadow: 0px 0px @shadowSpread @shadowBlur @shadowColor;
+   -webkit-box-shadow: 0px 0px @shadowSpread @shadowBlur @shadowColor;
+   box-shadow: 0px 0px @shadowSpread @shadowBlur @shadowColor;
+}
+.HighLight{
+   -moz-box-shadow: 0px 0px @shadowSpread2 @shadowBlur2 @shadowColor2;
+   -webkit-box-shadow: 0px 0px @shadowSpread2 @shadowBlur2 @shadowColor2;
+   box-shadow: 0px 0px @shadowSpread2 @shadowBlur2 @shadowColor2;
+}
+
+.Round{
+    .RoundedShape(9999px);
+}
+
+.RoundedSquare(@radius:@defaultRadius){
+    .RoundedShape(@radius);
+}
+
+@ccRadius:75px;
+.CenterCircle{
+   .Round;
+
+   position: absolute;
+
+   width: (@ccRadius*2);
+   height: (@ccRadius*2);
+   background-color: green;
+   margin-left: (-1*@ccRadius);
+   margin-top: (-1*@ccRadius);
+
+}
+@imageRadius: 70px;
+@borderSize: 10px;
+@defaultThemeColor: #74ADFF;
+
+#center_pic_holder{
+   display: block;
+   position: relative;
+   margin: auto;
+
+   width: 200px;
+   height: 200px;
+   margin-top: 35px;
+}
+
+.center_image{
+   .Round;
+   position: absolute;
+   top:20px;
+   left: 20px;
+
+   height:(2*@imageRadius);
+   width: (2*@imageRadius);
+
+   background-size: (2*@imageRadius) (2*@imageRadius);
+
+}
+
+@previewRadius: 50px;
+@previewBorderSize: 5px;
+.center_preview_image{
+   .Round;
+   position: absolute;
+   top:10px;
+   left: 10px;
+
+   height:(2*@previewRadius);
+   width: (2*@previewRadius);
+
+   border:@previewBorderSize solid @themeThree;
+
+
+}
+.center_preview_image_text_div{
+   .Round;
+   position: absolute;
+top:10px;
+   left: 10px;
+   height:(2*@previewRadius);
+   width: (2*@previewRadius);
+     background-image:@backgroundTexture;
+   background-size: (2*@imageRadius) (2*@imageRadius);
+   margin-left: ((@previewBorderSize));
+   margin-top: ((@previewBorderSize));
+   opacity: 0;
+
+}
+.preview_image_holder{
+   display: inline-block;
+   margin: auto;
+   position: relative;
+   width: 125px;
+   height: 125px;
+   margin-left: 20px;
+   opacity: 1;
+
+}
+.center_preview_image_text{
+   position: relative;
+   font-size: 10px;
+   text-align: center;
+   color: white;
+   top:25%;
+   font-family: cantarellregular;
+}
+
+
+#headshot{
+   //margin-left: (-1*(@imageRadius+@borderSize));
+   //margin-top: (-1*(@imageRadius+@borderSize));
+   background-image:url('../images/ben_head.jpg');
+   .LightShadow;
+
+
+   border:@borderSize solid @defaultThemeColor;
+}
+#head_text{
+   margin-left: ((@borderSize));
+   margin-top: ((@borderSize));
+   background-image:@backgroundTexture;
+
+   opacity: 0;
+}
+
+
+.name_subtext{
+   position: relative;
+   font-size: 15px;
+   text-align: center;
+   color: white;
+  top:25%;
+   font-family: cantarellregular;
+  }
+
+#section_holder{
+   width: 600px;
+   height: 100px;
+
+   position: relative;
+   margin: auto;
+
+}
+
+.section_div{
+   display: inline-block;
+   margin-left: 50px;
+
+}
+.section_highlight{
+   width: 40px;
+   height: 5px;
+   background-color: @themeThree;
+   margin: auto;
+   display: block;
+   margin-top: -10px;
+   display: none;
+   .Round;
+   .HighLight;
+  // background-image:url('../images/ben_head.jpg');
+  // background-repeat: true;
+   opacity: .8;
+
+}
+.section_text{
+      color: white;
+  font-size: 20px;
+   font-family: cantarellregular;
+}
+
+#preview_holder{
+   position: relative;
+   width: 800px;
+   height: 100px;
+   position: relative;
+   margin: auto;
+   top: 20%;
+
+}
+
+@imageRadiusPrev: 40px;
+.preview_image{
+   .Round;
+   display: inline-block;
+   height:(2*@imageRadiusPrev);
+   width: (2*@imageRadiusPrev);
+    z-index: 2;
+
+   background-size: (2*@imageRadius) (2*@imageRadius);
+
+}
+
+.home_circle{
+   .Round;
+   position: absolute;
+   top: 30px;
+   left: 30px;
+   width: 150px;
+   height: 150px;
+
+   color: white;
+   background-size: (2*@imageRadius) (2*@imageRadius);
+}
+.left_bar{
+   width: 200px;
+   position: fixed;
+}
+
+
+.body_platter{
+   width: 960px;
+   height: 1000px;
+   background-color: white;
+   .LightShadow;
+   border-radius: 3px;
+   display: block;
+   margin: auto;
+   margin-top: 50px;
+}
+
+
+
+body{ height: 100%; padding: 0; margin: 0; //
+  .BackgroundTexture;
+  text-align: center;
+}
+.BackgroundTexture{
+      background-image: @backgroundTexture;
+    background-repeat: true;
+}
+#main_mc{
+   display: block;
+   margin: auto;
+   position: relative;
+   top: 10%;
+}
+#signature{
+   position: relative;
+   top: 10%;
+   color: white;
+   font-size: 50px;
+   font-family: 'danielregular';
+   display: block;
+   margin: auto;
+   text-shadow: 2px 6px #000000;
+}
