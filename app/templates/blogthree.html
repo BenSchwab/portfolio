@@ -1,13 +1,36 @@
 {% extends "page_base.html" %}
+{% block imports %}
+ <script src = "../static/js/blog.js" type="text/javascript"></script>
+{% endblock %}
 {% block content %}
 <div class ="body_platter">
   <div class = "section_head">
-    <p class = "name_header">Benjamin Schwab</p>
+   <a href="/"> <p class = "header_name">Benjamin Schwab</p></a>
     <p class = "header_divider">|</p>
-    <p class = "header_divider">Blog</p>
-
+    <p class = "header_title">Blog</p>
   </div>
 
+  <div class = "preview_section">
+
+  {% for blog in published_blogs %}
+
+  <div class="blog_square">
+   <img class ="blog_square_image" src="../static/images/seattle.jpg"></img>
+   <p class = "blog_square_title">{{blog.blogTitle}}</p>
+   <div class = "blog_square_preview">
+      <div class= "blog_square_preview_text">{{blog.preview}}</div>
+   </div>
+   <div class = "blog_preview_date">{{blog.date}}{{blog.getDate()}}</div>
+   <div class="blog_tag_holder">
+    <img class ="blog_square_tag" src="../static/images/seattle.jpg"></img>
+     <img class ="blog_square_tag" src="../static/images/seattle.jpg"></img>
+   </div>
 </div>
+{% endfor %}
+
+
+
+</div>
+
 
 {% endblock %}

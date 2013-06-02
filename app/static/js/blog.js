@@ -1,8 +1,6 @@
 jQuery(document).ready(function($){
 
-
-
-   $('#head_text').hover(
+   $('#home_shot_text').hover(
     function () {
       //alert("animating");
       $(this).animate({opacity:'.8'});
@@ -11,4 +9,14 @@ jQuery(document).ready(function($){
      $(this).animate({opacity:'0'});
   }
   );
-}
+   $('.blog_square_preview').hover(
+    function () {
+      //alert("animating");
+      $(this).animate({opacity:'1'});
+   },
+   function () {
+     $(this).animate({opacity:'0'});
+  }
+  );
+
+});

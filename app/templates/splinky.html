@@ -1,0 +1,35 @@
+{% extends "page_base.html" %}
+{% block imports %}
+<script src = "../static/js/blog.js" type="text/javascript"></script>
+{% endblock %}
+{% block content %}
+<div class ="body_platter">
+ <div class = "section_head">
+  <a href="/"> <p class = "header_name">Benjamin Schwab</p></a>
+  <p class = "header_divider">|</p>
+  <p class = "header_title">About</p>
+  <div class ="span_12">
+         <div class = "preview_image_holder" >
+           <image class="center_preview_image" src = "../static/images/about/linkedin_icon.png" ></image>
+           <a href ="http://www.linkedin.com/pub/ben-schwab/46/8a1/273"><div class="center_preview_image_text_div" >
+            <p class ="center_preview_image_text">LinkedIn</p>
+         </div></a>
+      </div>
+      <div class = "preview_image_holder">
+       <image class="center_preview_image" src = "../static/images/about/github_icon.png" ></image>
+       <a href="https://github.com/BenSchwab"><div class="center_preview_image_text_div" >
+        <p class ="center_preview_image_text">Github</p>
+      </div></a>
+      </div>
+      <div class = "preview_image_holder">
+        <image class="center_preview_image" src = "../static/images/about/facebook_icon.png" ></image>
+        <a href ="https://www.facebook.com/ben.schwab.14"><div class="center_preview_image_text_div" >
+           <p class ="center_preview_image_text">Facebook</p>
+        </div></a>
+      </div>
+</div>
+<div class ="span_10">I am a rising Junior at Duke University with a double major in Computer Science and Math with a minor in Economics. At Duke, I am a <a href ="http://www.jhfc.duke.edu/usp/">University Scholar</a>, and am involved with Duke's undergraduate entreprenuerial living group, <a href = "http://www.incube.us">InCube</a>. This summer I will be an intern at Microsoft working on the Kinect for Xbox One. </div>
+<div class ="span_10">This blog was built as a project to teach myself the web server microframework Flask and Python. Other technologies on this site include less.css, and JQuery. I enjoy competive coding frequently competing Topcoder SRMs and I have represented Duke in the ACM ICPC competition since my Freshman year.</div>
+
+</div>
+{% endblock %}

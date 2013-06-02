@@ -1,15 +1,11 @@
 from flask import Flask
-from flask.ext.mongoengine import MongoEngine
+from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.login import LoginManager
 
 app = Flask(__name__)
-app.config["MONGODB_SETTINGS"] = {'DB': "my_tumble_log"}
-app.config["SECRET_KEY"] = "KeepThisS3cr3t"
+app.config.from_object('config')
+db = SQLAlchemy(app)
+lm = LoginManager()
+lm.setup_app(app)
 
-db = MongoEngine(app)
-
-def register_blueprints(app):
-    # Prevents circular imports
-    from app.views import posts
-    app.register_blueprint(posts)
-
-register_blueprints(app)
+from app import views, models

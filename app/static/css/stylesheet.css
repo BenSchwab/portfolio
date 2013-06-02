@@ -1,0 +1,509 @@
+@import url("animate-custom.css");
+
+body{
+    margin:0;
+    padding:0;
+    text-align: center;
+    background-image: url(../images/game_of_life/linedpaper.png); background-repeat: repeat;;
+    min-width: 1400px;
+
+
+}
+
+
+#video_pulldown{
+   left: 45%;
+   width: 100px;
+   margin-top: 10px;
+   text-align: center;
+   display: block;
+   margin: auto;
+   background-color: rgba(20,40,100, .8);
+   z-index: 1;
+}
+
+#center_content{
+   display: inline-block;
+   margin: auto;
+   text-align: center;
+
+}
+#color_wheel{
+
+}
+#left_toolbar{
+
+   margin-top: 25px;
+   display: none;
+   position: relative;
+   height: 600px;
+   width: 210px;
+   float: left;
+   background-image: url(../images/game_of_life/black_lozenge.png); background-repeat: repeat;;
+}
+
+#right_toolbar{
+
+    margin-top: 25px;
+   display: none;
+   position: relative;
+   height: 600px;
+   width: 210px;
+   position: relative;
+   float: left;
+   background-image: url(../images/game_of_life/black_lozenge.png); background-repeat: repeat;;
+}
+
+#active_holder{
+   display: inline-block;
+   background-color: transparent;
+   position: relative;
+   float: left;
+}
+
+#middle_box{
+   display: block;
+   margin: auto;
+   text-align: center;
+}
+#left_box{
+   width: 70px;
+   height: 300px;
+
+   margin: auto;
+   display: inline-block;
+}
+#my_canvas{
+   display: inline-block;
+   cursor: crosshair;
+}
+
+#right_box{
+   width: 70px;
+   height: 300px;
+   margin: auto;
+   display: inline-block;
+}
+
+#top_box{
+   width: 300px;
+   height: 70px;
+
+   margin: auto;
+   display: block;
+}
+#bottom_box{
+   width: 300px;
+   height: 70px;
+
+   margin: auto;
+   display: block;
+}
+
+#my_canvas:active {
+    cursor: crosshair;
+}
+#header{
+   height: 70px;
+   background-color: black;
+   background-image: url(../images/game_of_life/black_lozenge.png); background-repeat: repeat;
+}
+#header_two{
+   height: 50px;
+
+}
+
+
+
+
+#color_wheel{
+   display: block;
+   margin: auto;
+}
+
+.subheader{
+   border-right: #84b8d9 2px solid;
+   float: left;
+   width: 18%;
+   height: 70px;
+
+}
+.header_text{
+
+   font-family: 'sansationregular';
+   font-size: 20px;
+   color: white;
+   display: block;
+   margin: 0;
+   cursor: pointer;
+}
+.header_text_sub{
+
+   font-family: 'sansationregular';
+   font-size: 14px;
+   color: #bbb;
+   display: block;
+   margin: 0;
+   cursor: pointer;
+}
+
+.header_text_two{
+
+   font-family: 'sansationregular';
+   font-size: 14px;
+   color: #f32109;
+   display: block;
+   margin: 0;
+   cursor: pointer;
+}
+.subheader:hover{
+   background-color: rgba(20,200,200,.3);
+   box-shadow: 0px 0px 10px #888888 inset;
+}
+
+.subheader:hover .header_text_two{
+   -webkit-transform: scale(1.25);
+}
+
+.control_button{
+   display: block;
+   margin-top: 10px;
+   margin: auto;
+}
+
+.header:first-child, .header:last-child{
+   margin: 0px;
+}
+
+#directions{
+  display: block;
+
+}
+#todo_list{
+ display: none;
+ box-shadow: 5px 5px 5px #888888;
+ position: absolute;
+ bottom: 20px;
+ left:6px;
+ width:160px;
+ min-height: 250px;
+ border: black 2px solid;
+
+ background: #f8de43; /* Old browsers */
+ background: -moz-linear-gradient(-45deg,  #f8de43 0%, #f6ed86 100%); /* FF3.6+ */
+ background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#f8de43), color-stop(100%,#f6ed86)); /* Chrome,Safari4+ */
+ background: -webkit-linear-gradient(-45deg,  #f8de43 0%,#f6ed86 100%); /* Chrome10+,Safari5.1+ */
+ background: -o-linear-gradient(-45deg,  #f8de43 0%,#f6ed86 100%); /* Opera 11.10+ */
+ background: -ms-linear-gradient(-45deg,  #f8de43 0%,#f6ed86 100%); /* IE10+ */
+ background: linear-gradient(135deg,  #f8de43 0%,#f6ed86 100%); /* W3C */
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8de43', endColorstr='#f6ed86',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+}
+.todo_head{
+  font-family: "ambleregular";
+  font-size: 20px;
+}
+.todo_text{
+
+}
+.todo_0{
+  display: none;
+  font-family: "ambleregular"
+}
+.todo_1{
+  display: none;
+  font-family: "ambleregular"
+}
+.todo_2{
+  display: none;
+  font-family: "ambleregular"
+}
+.todo_3{
+  display: none;
+  font-family: "ambleregular"
+}
+.todo_4{
+  display: none;
+  font-family: "ambleregular"
+}
+.todo_5{
+  display: none;
+  font-family: "ambleregular"
+}
+
+
+.corner_popup{
+   display: none;
+   position: absolute;
+   padding: 5px;
+   border: #84b8d9 2px solid;
+   top: 80px;
+   left:60px;
+   z-index: 10;
+   background-color: rgba(100,100,100,.3);
+}
+.right_corner_popup{
+   display: none;
+   position: absolute;
+   padding: 10px;
+   top: 80px;
+   right:60px;
+   z-index: 10;
+   border: #84b8d9 2px solid;
+   background-color: rgba(100,100,100,.3);
+}
+
+.pop_image{
+   position: relative;
+   text-align: center;
+   display: block;
+   margin: auto;
+}
+
+
+
+.shadow_down {
+  -moz-box-shadow:    2px 2px 2px 2px #000000;
+  -webkit-box-shadow: 2px 2px 2px 2px #000000;
+  box-shadow:         2px 2px 2px 2px #000000;
+}
+.shadow_down_gray {
+  -moz-box-shadow:    2px 2px 2px 2px #C0C0C0;
+  -webkit-box-shadow: 2px 2px 2px 2px #C0C0C0;
+  box-shadow:         2px 2px 2px 2px #C0C0C0;
+}
+.shadow_blue {
+  -moz-box-shadow:    0px 0px 5px 5px #647783;
+  -webkit-box-shadow: 0px 0px 5px 5px #647783;
+  box-shadow:         0px 0px 5px 5px #647783;
+}
+
+#drop_down_arrow{
+
+
+
+}
+#cur_head_div{
+   display: block;
+   height: 30px;
+}
+#cur_title_div{
+   display: block;
+   height: 40px;
+}
+
+.button_div{
+   border: #84b8d9 2px solid;
+   border-radius: 3px;
+   width: 60px;
+   height: 60px;
+   background-color: rgba(100,100,100,.3);
+   margin: auto;
+   display: block;
+   margin-top: 10px;
+}
+.button_div:hover{
+  box-shadow: 0px 0px 5px #FFFF00 inset;
+  -webkit-transform: scale(1.05);
+  cursor: pointer;
+}
+.button_div_two{
+   border: #84b8d9 2px solid;
+   border-radius: 3px;
+   width: 60px;
+   height: 60px;
+   background-image: url(../images/game_of_life/black_lozenge.png); background-repeat: repeat;;
+   margin: auto;
+   display: block;
+   margin-top: 10px;
+}
+.button_div_two:hover{
+  box-shadow: 0px 0px 5px #FFFF00 inset;
+  -webkit-transform: scale(1.05);
+  cursor: pointer;
+}
+
+
+.inline{
+   display: inline-block;
+}
+.horizontal_holder{
+   display: block;
+   margin: auto;
+}
+#speed_multiplier{
+   color: white;
+   display: inline-block;
+   font-family: 'ambleregular';
+}
+#wheel_div{
+   border: #84b8d9 2px solid;
+   border-radius: 3px;
+   width: 60px;
+   height: 60px;
+   background-color: rgba(100,100,100,.3);
+   margin: auto;
+   display: block;
+   margin-top: 10px;
+   text-align: center;
+   padding: 15px;
+}
+#wheel_div:hover{
+  box-shadow: 0px 0px 5px #FFFF00 inset;
+  -webkit-transform: scale(1.5);
+}
+
+.pre_made_shape{
+   font-family: 'ambleregular';
+   font-size: 16px;
+   color: white;
+}
+.pre_made_shape:hover{
+   cursor:pointer
+}
+
+
+
+@font-face {
+    font-family: 'sansationregular';
+    src: url('../fonts/sansation_regular-webfont.eot');
+    src: url('../fonts/sansation_regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/sansation_regular-webfont.woff') format('woff'),
+         url('../sansation_regular-webfont.ttf') format('truetype'),
+         url('../sansation_regular-webfont.svg#sansationregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'ambleregular';
+    src: url('../fonts/amble-regular-webfont.eot');
+    src: url('../fonts/amble-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/amble-regular-webfont.woff') format('woff'),
+         url('../fonts/amble-regular-webfont.ttf') format('truetype'),
+         url('../fonts/amble-regular-webfont.svg#ambleregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+#preview_canvas{
+   width: 100px;
+   height: 100px;
+   border:2px black solid;
+   display: none;
+   margin: auto;
+}
+
+.clicked{
+  background-color: rgba(200,200,100,1);
+  box-shadow: 0px 0px 10px #FFFF00;
+
+}
+
+
+#pulldown_div{
+
+   display: inline-block;
+
+   float: left;
+   margin-left: 15px;
+   margin-top: 5px;
+}
+
+
+#drop_down_menu{
+   display: none;
+   position: absolute;
+   padding: 10px;
+   top: 80px;
+   right: 5px;
+   z-index: 12;
+   border: #84b8d9 2px solid;
+   width: 150px;
+   background-image: url(../images/game_of_life/black_lozenge.png); background-repeat: repeat;;
+ }
+
+
+ .menu_title{
+    font-family: 'sansationregular';
+    color:#84b8d9;
+    font-size: 20px;
+    display: block;
+    margin: auto;
+    cursor: pointer;
+
+ }
+
+ .menu_subtitle{
+    font-family: 'ambleregular';
+    color:#bbb;
+    font-size: 16px;
+    display: block;
+    margin: auto;
+    cursor: pointer;
+ }
+
+ .dd_div{
+  margin-top: 5px;
+  padding: 10px;
+  border-bottom: #652825 2px solid;
+  cursor: pointer;
+ }
+
+ .dd_div:hover{
+
+ }
+
+ .dd_div:hover .menu_title{
+    color: #f32109;
+    -webkit-transform: scale(1.15);
+
+  }
+
+  .shape_header{
+    color:#bbb;
+    font-family: 'ambleregular';
+    display: block;
+    margin: auto;
+  }
+
+  #center_content{
+
+  }
+
+  #active_holder_two{
+    display: none;
+  }
+
+
+
+#basic-modal-content-6 {display:none;}
+
+#basic-modal-content-5 {display:none;}
+
+#basic-modal-content-4 {display:none;}
+#basic-modal-content-3 {display:none;}
+
+#basic-modal-content-2 {display:none;}
+
+#basic-modal-content-1 {display:none;}
+
+#basic-modal-content-0 {display:none;}
+
+/* Overlay */
+#simplemodal-overlay {background-color:#000;}
+
+/* Container */
+#simplemodal-container {height:560px; width:700px; color:#bbb; background-color:#333; border:4px solid #444; padding:12px; box-shadow: 0px 0px 20px #84b8d9 inset;}
+#simplemodal-container .simplemodal-data {padding:8px;font-family: 'ambleregular' }
+#simplemodal-container code {background:#141414; border-left:3px solid #65B43D; color:#bbb; display:block; font-size:12px; margin-bottom:12px; padding:4px 6px 6px;}
+#simplemodal-container a {color:#ddd;}
+#simplemodal-container li {color: white; border-left:3px solid #65B43D}
+#simplemodal-container a.modalCloseImg {background:url(../images/game_of_life/x.png) no-repeat; width:25px; height:29px; display:inline; z-index:3200; position:absolute; top:-15px; right:-16px; cursor:pointer;}
+#simplemodal-container h3 {color:#84b8d9; font-family: 'sansationregular'; font-size: 25px;}
+
+
+

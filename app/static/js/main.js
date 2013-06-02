@@ -1,6 +1,6 @@
 jQuery(document).ready(function($){
 
-   var content = "helloCAt";
+
 
 
    $('#head_text').hover(
@@ -50,11 +50,11 @@ jQuery(document).ready(function($){
             command = "/getBlogPreview";
          }
 
-         $("#preview_holder").children().fadeOut(500).promise().done(function() {
+         $("#preview_holder").children().fadeOut(300).promise().done(function() {
           $.get(command, function(data) {
 
            $("#preview_holder").children().remove();
-           $('#preview_holder').append(data['html']).hide().fadeIn(1000);
+           $('#preview_holder').append(data['html']).hide().fadeIn(500);
            $('.center_preview_image_text_div').hover(
              function () {
                   //alert("animating");

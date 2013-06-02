@@ -6,13 +6,13 @@
       <script type="text/javascript" src="../static/jquery-1.9.1.min.js"></script>
    <link rel="stylesheet/less" type="text/css" href="../static/less/style_two.less" />
    <script src="../static/less-1.3.3.min.js" type="text/javascript"></script>
+   {% block imports %}{% endblock %}
   </head>
 
   <body>
-    <div class="home_circle" id="headshot"></div>
-      <div class="home_circle" id="head_text">
-        <p class ="name_subtext">Home</p>
-      </div>
+    <div id = "left_column">
+
+    </div>
     {% block content %}{% endblock %}
 
 

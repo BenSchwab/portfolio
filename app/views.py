@@ -1,23 +1,71 @@
-from flask import Blueprint, request, redirect, render_template, url_for
+from flask import request, redirect, render_template, url_for, g
+from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.views import MethodView
 from flask import jsonify
-from app import app
-from app.models import Post, Comment
-from flask.ext.mongoengine.wtf import model_form
+from forms import LoginForm, BlogForm
+from app import app, db, lm
+from app.models import BlogPost, BlogComment, Admin
 import os
 
-posts = Blueprint('posts', __name__, template_folder='templates')
+@app.before_request
+def before_request():
+    g.user = current_user
 
+#There might be bugs here..
+@lm.user_loader
+def load_user(userid):
+    return Admin.query.get(int(userid))
 
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/index', methods = ['GET', 'POST'])
 def index():
     return render_template("main.html")
+@app.route('/blog/<post_title>')
+@app.route('/blog/test', methods = ['GET', 'POST'])
+def blogPost(post_title = "rando"):
+    post_content = BlogPost.query.all()[0].content
+    #print(post_content)
+    return render_template("sample_blog.html", post_content = post_content)
 
+@app.route('/picupload', methods = ['GET', 'POST'])
+def picUpload():
+    print "Picture attempted to be uploaded"
+    #should use secure file if uploader is not trusted. For personal use this
+    file = request.files['pic']
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    savedir = os.path.join(basedir, 'static/images/blog', file.filename)
+    file.save(savedir)
+    return jsonify(success = True)
+
+@app.route('/gameoflife', methods = ['GET', 'POST'])
+@app.route('/projects/gameoflife', methods = ['GET', 'POST'])
+def gameOfLifeApp():
+    return render_template("gameoflife.html")
+
+@app.route('/projects/splinky')
+def splinky():
+    return render_template("splinky.html")
+
+@app.route('/projects/satvocab')
+def satVocab():
+    return render_template("satvocab.html")
 
 @app.route('/blog', methods = ['GET', 'POST'])
 def blog():
-    return render_template("blogthree.html")
+    published_blogs = BlogPost.query.filter_by(published=True)
+    return render_template("blogthree.html", published_blogs = published_blogs)
+
+@app.route('/projects', methods = ['GET', 'POST'])
+def projects():
+    return render_template("projects.html")
+
+@app.route('/about/', methods = ['GET', 'POST'])
+def about():
+    return render_template("about.html")
+
+@app.route('/writing/', methods = ['GET', 'POST'])
+def writing():
+    return render_template("writing.html")
 
 @app.route('/getAccelerationText', methods = ['GET'])
 def getAccelerationText():
@@ -25,6 +73,50 @@ def getAccelerationText():
     filename = os.path.join(basedir, 'static/text/AccelerationPlainText.txt')
     content = open(filename, 'r').read()
     return jsonify(text=content)
+
+@app.route('/admin/save', methods = ['GET', 'POST'])
+@login_required
+def savePost():
+    for v in request.values:
+        print v
+    return redirect(url_for('adminBlogEdit'))
+
+
+@app.route('/admin/<post_id>')
+@app.route('/admin', methods = ['GET', 'POST'])
+@login_required
+def adminBlogEdit(post_id = 1):
+    #logout_user()
+    published_blogs = BlogPost.query.filter_by(published=True)
+    unpublished_blogs = BlogPost.query.filter_by(published=False)
+    blog = BlogPost.query.get(post_id)
+    form = BlogForm()
+    return render_template("admin.html", published_blogs = published_blogs, unpublished_blogs = unpublished_blogs, current_blog = blog, form = form)
+
+@app.route('/adminlogin', methods = ['GET', 'POST'])
+def login():
+    #already logged in redirect to adminPanel
+    if g.user is not None and g.user.is_authenticated():
+        return redirect(url_for('adminBlogEdit'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        #session['remember_me'] = form.remember_me.data
+        username = form.username.data
+        password = form.password.data
+        print username
+        admin = Admin.query.filter_by(name=username).first()
+        if admin == None:
+            print ("no admin found")
+        else:
+            if admin.check_password(password):
+                login_user(admin)
+                return redirect(url_for('adminBlogEdit'))
+
+        #print ad
+       # print(ad.check_password(form.password.data))
+        return redirect(url_for('login'))
+    return render_template('admin_login.html',
+        form = form)
 
 @app.route('/getProjectPreview', methods = ['GET'])
 def getProjectPrevew():
@@ -54,48 +146,3 @@ def getWritingPrevew():
     content = open(filename, 'r').read()
     return jsonify(html=content)
 
-class ListView(MethodView):
-
-    def get(self):
-        posts = Post.objects.all()
-        return render_template('posts/list.html', posts=posts)
-
-
-class DetailView(MethodView):
-
-    form = model_form(Comment, exclude=['created_at'])
-
-    def get_context(self, slug):
-        post = Post.objects.get_or_404(slug=slug)
-        form = self.form(request.form)
-
-        context = {
-            "post": post,
-            "form": form
-        }
-        return context
-
-    def get(self, slug):
-        context = self.get_context(slug)
-        return render_template('posts/detail.html', **context)
-
-    def post(self, slug):
-        context = self.get_context(slug)
-        form = context.get('form')
-
-        if form.validate():
-            comment = Comment()
-            form.populate_obj(comment)
-
-            post = context.get('post')
-            post.comments.append(comment)
-            post.save()
-
-            return redirect(url_for('posts.detail', slug=slug))
-
-        return render_template('posts/detail.html', **context)
-
-
-# Register the urls
-#posts.add_url_rule('/', view_func=ListView.as_view('list'))
-posts.add_url_rule('/<slug>/', view_func=DetailView.as_view('detail'))

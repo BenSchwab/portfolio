@@ -1,4 +1,9 @@
 @import url("../static/animate-custom.css");
+* a:link    {text-decoration:none; color: transparent;}
+* a:visited {text-decoration:none; color: transparent;}
+* a:hover   {text-decoration:none; color: transparent;}
+* a:active  {text-decoration:none; color: transparent;}
+
 @themeOne: #C0DAFF;
 @themeTwo: #3A577F;
 @themeThree: #606E7F;
@@ -32,6 +37,31 @@
 
 }
 
+
+@font-face {
+    font-family: 'chunkfiveroman';
+    src: url('../fonts/chunkfive-webfont.eot');
+    src: url('../fonts/chunkfive-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/chunkfive-webfont.woff') format('woff'),
+         url('../fonts/chunkfive-webfont.ttf') format('truetype'),
+         url('../fonts/chunkfive-webfont.svg#chunkfiveroman') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'journalregular';
+    src: url('../fonts/journal-webfont.eot');
+    src: url('../fonts/journal-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/journal-webfont.woff') format('woff'),
+         url('../fonts/journal-webfont.ttf') format('truetype'),
+         url('../fonts/journal-webfont.svg#journalregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 @backgroundTexture: url('../images/dark_wall.png');
 
 
@@ -50,10 +80,16 @@
 @shadowColor2: @themeThree;
 @shadowSpread2: 3px;
 @shadowBlur2:3px;
-.LightShadow{
-   -moz-box-shadow: 0px 0px @shadowSpread @shadowBlur @shadowColor;
-   -webkit-box-shadow: 0px 0px @shadowSpread @shadowBlur @shadowColor;
-   box-shadow: 0px 0px @shadowSpread @shadowBlur @shadowColor;
+@defaultShadowSize:3px;
+.LightShadow(@shadowSize:@defaultShadowSize){
+   -moz-box-shadow: 0px 0px @shadowSize @shadowSize @shadowColor;
+   -webkit-box-shadow: 0px 0px @shadowSize @shadowSize @shadowColor;
+   box-shadow: 0px 0px @shadowSize @shadowSize @shadowColor;
+}
+.LightShadowIn(@shadowSize:@defaultShadowSize){
+   -moz-box-shadow: 0px 0px @shadowSize @shadowSize @shadowColor inset;
+   -webkit-box-shadow: 0px 0px @shadowSize @shadowSize @shadowColor inset;
+   box-shadow: 0px 0px @shadowSize @shadowSize @shadowColor inset;
 }
 .HighLight{
    -moz-box-shadow: 0px 0px @shadowSpread2 @shadowBlur2 @shadowColor2;
@@ -69,6 +105,10 @@
     .RoundedShape(@radius);
 }
 
+.no_decoration{
+    text-decoration: none;
+}
+
 @ccRadius:75px;
 .CenterCircle{
    .Round;
@@ -77,7 +117,6 @@
 
    width: (@ccRadius*2);
    height: (@ccRadius*2);
-   background-color: green;
    margin-left: (-1*@ccRadius);
    margin-top: (-1*@ccRadius);
 
@@ -186,7 +225,7 @@ top:10px;
   }
 
 #section_holder{
-   width: 600px;
+
    height: 100px;
 
    position: relative;
@@ -222,7 +261,7 @@ top:10px;
 
 #preview_holder{
    position: relative;
-   width: 800px;
+   min-width: @mainWidth;
    height: 100px;
    position: relative;
    margin: auto;
@@ -242,34 +281,55 @@ top:10px;
 
 }
 
+@homeRadius: 90px;
 .home_circle{
    .Round;
    position: absolute;
    top: 30px;
    left: 30px;
-   width: 150px;
-   height: 150px;
+   width: @homeRadius;
+   height: @homeRadius;
 
    color: white;
-   background-size: (2*@imageRadius) (2*@imageRadius);
+   background-size: (@homeRadius) (@homeRadius);
 }
+@homeBorderSize: 5px;
+#home_shot{
+   //margin-left: (-1*(@imageRadius+@borderSize));
+   //margin-top: (-1*(@imageRadius+@borderSize));
+   background-image:url('../images/ben_head.jpg');
+   .LightShadow;
+
+
+   border: @homeBorderSize solid @defaultThemeColor;
+}
+#home_shot_text{
+   margin-left: ((@homeBorderSize));
+   margin-top: ((@homeBorderSize));
+   background-image:@backgroundTexture;
+
+   opacity: 0;
+}
+
 .left_bar{
    width: 200px;
    position: fixed;
 }
 
-
+@platterWidth: 960px;
 .body_platter{
-   width: 960px;
-   height: 1000px;
+   width: @platterWidth;
+   min-height: 200px;
    background-color: white;
    .LightShadow;
    border-radius: 3px;
    display: block;
    margin: auto;
-   margin-top: 50px;
+   margin-top: 40px;
+   padding: 30px;
 }
 
+@mainWidth: 500px;
 
 
 body{ height: 100%; padding: 0; margin: 0; //
@@ -281,10 +341,10 @@ body{ height: 100%; padding: 0; margin: 0; //
     background-repeat: true;
 }
 #main_mc{
-   display: block;
+  min-width: @mainWidth;
    margin: auto;
    position: relative;
-   top: 10%;
+   margin-top: 100px;
 }
 #signature{
    position: relative;
@@ -296,3 +356,535 @@ body{ height: 100%; padding: 0; margin: 0; //
    margin: auto;
    text-shadow: 2px 6px #000000;
 }
+
+
+/******** Blog CSS -- possibly refactor to content small*************/
+
+  .preview_section{
+    display: block;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+  }
+
+
+   .header_name{
+      display: inline-block;
+         font-family: "cantarellregular";
+      font-size: 40px;
+      color: @themeThree;
+   }
+   .header_divider{
+      display: inline-block;
+      font-family: "chunkfiveroman";
+      font-size: 50px;
+      color: @themeThree;
+   }
+   .header_title{
+      display: inline-block;
+      font-family: "chunkfiveroman";
+      font-size: 50px;
+      color: @themeThree;
+   }
+   .blog_square{
+      display: inline-block;
+      position: relative;
+      margin: auto;
+      margin-left: 50px;
+      margin-top: 50px;
+
+      width: 200px;
+      height: 300px;
+
+      padding: 10px;
+      .LightShadowIn;
+      border-radius: 2px;
+
+      background-image:@backgroundTexture;
+
+
+   }
+   .blog_square_image{
+      .Round;
+      position: absolute;
+      top: -35px;
+      left: -35px;
+      width: 75px;
+      height: 75px;
+      .LightShadow;
+      z-index: 3;
+   }
+   .blog_square_preview{
+      color: black;
+       width: 200px;
+      height: 300px;
+      padding: 10px;
+      .LightShadowIn;
+      top: 0;
+      left: 0;
+      position: absolute;
+      font-family: "cantarellregular";
+      opacity: 0;
+      background-image:url('../images/dark_wall_blue.png');
+      background-repeat: true;
+      z-index: 2;
+
+   }
+   .blog_square_preview_text{
+     display: block;
+     margin: auto;
+     margin-top: 50px;
+     color: white;
+
+      font-family: "cantarellregular";
+
+
+   }
+   .blog_square_title{
+       display: block;
+       position: absolute;
+       margin: auto;
+       margin-top: 20px;
+      color: @themeOne;
+      font-size: 20px;
+      width: 190px;
+      height: 150px;
+      padding: 5px;
+       font-family: "cantarellregular";
+
+   }
+   .blog_square_tag{
+      width: 50px;
+      height: 50px;
+      .LightShadow;
+      margin-left: 10px;
+   }
+   .blog_tag_holder{
+      position: absolute;
+      display: block;
+
+      bottom: 10px;
+      width: 200px;
+      height: 60px;
+
+   }
+   .blog_preview_date{
+      position: absolute;
+      display: block;
+      margin: auto;
+      height: 50px;
+      width: 150px;
+      top: 180px;
+      left: 30px;
+
+      color: @themeTwo;
+      font-size: 30px;
+      font-family: "chunkfiveroman";
+   }
+
+/*****Content Div Large*******/
+
+.content_square{
+      display: inline-block;
+      position: relative;
+      margin: auto;
+      margin-left: 70px;
+      margin-top: 70px;
+      width: 320px;
+      height: 400px;
+      padding: 10px;
+      .LightShadowIn;
+      border-radius: 2px;
+      background-image:@backgroundTexture;
+
+
+   }
+   .content_square_image{
+      .Round;
+      position: absolute;
+      top: -60px;
+      left: -60px;
+      width: 120px;
+      height: 120px;
+      .LightShadow;
+      z-index: 3;
+   }
+   .content_square_preview{
+      color: black;
+       width: 320px;
+      height: 400px;
+      padding: 10px;
+      .LightShadowIn(2px);
+      top: 0;
+      left: 0;
+      position: absolute;
+      font-family: "cantarellregular";
+      opacity: 0;
+      background-image:url('../images/dark_wall_blue.png');
+      background-repeat: true;
+      z-index: 2;
+
+   }
+   .content_square_preview_text{
+     display: block;
+     margin: auto;
+     margin-top: 70px;
+     color: white;
+     font-size: 18px;
+      font-family: "cantarellregular";
+
+
+   }
+   .content_square_title{
+       display: block;
+       position: absolute;
+       margin: auto;
+       margin-top: 20px;
+      color: @themeOne;
+      font-size: 40px;
+      width: 320px;
+      height: 100px;
+      padding: 5px;
+      font-family: "cantarellregular";
+
+   }
+   .content_square_picture{
+    display: inline-block;
+      max-width: 180px;
+      max-height: 180px;
+      .LightShadow(1px);
+      margin-left: 10px;
+      padding: 10px;
+   }
+   .content_tag_holder{
+
+      position: absolute;
+      top: 130px;
+      width: 300px;
+      height: 220px;
+
+   }
+   .content_preview_date{
+      position: absolute;
+      display: block;
+      margin: auto;
+      height: 50px;
+      width: 150px;
+      top: 180px;
+      left: 30px;
+
+      color: @themeTwo;
+      font-size: 30px;
+      font-family: "chunkfiveroman";
+   }
+
+
+#left_column{
+  width: 200px;
+  height: 100%;
+  position: fixed;
+
+
+
+  float: left;
+
+}
+
+@unitWidth : @platterWidth/12;
+@spanPadding: 10px;
+@spanMT: 20px;
+@spanFont: "cantarellregular";
+@spanFontSize: 16px;
+.span_2{
+  width: 2*@unitWidth;
+  display: inline-block;
+  margin-top: @spanMT;
+  padding: @spanPadding;
+  font-family: @spanFont;
+  font-size: @spanFontSize;
+}
+.span_4{
+  width: 4*@unitWidth;
+  display: inline-block;
+  margin-top: @spanMT;
+  padding: @spanPadding;
+  font-family: @spanFont;
+  font-size: @spanFontSize;
+}
+.span_6{
+    width: 6*@unitWidth;
+  display: inline-block;
+  margin-top: @spanMT;
+  padding: @spanPadding;
+  font-family: @spanFont;
+  font-size: @spanFontSize;
+}
+.span_8{
+    width: 8*@unitWidth;
+  display: inline-block;
+  margin-top: @spanMT;
+  padding: @spanPadding;
+  font-family: @spanFont;
+  font-size: @spanFontSize;
+}
+.span_10{
+  width: 10*@unitWidth;
+  display: inline-block;
+  margin-top: @spanMT;
+  padding: @spanPadding;
+  font-family: @spanFont;
+  font-size: @spanFontSize;
+}
+.span_12{
+  width: 12*@unitWidth;
+  display: inline-block;
+  margin-top: @spanMT;
+  padding: @spanPadding;
+  font-family: @spanFont;
+  font-size: @spanFontSize;
+}
+
+
+/**Blog Post ***/
+
+.section_title{
+
+}
+.left_block_quote{
+    align: left;
+     border-left: 4px @themeFour solid;
+    width: 450px;
+    font-family: "journalregular";
+     font-size: 40px;
+     color: @themeTwo;
+
+     margin-left: 30px;
+     padding: 10px;
+}
+.right_block_quote{
+   align: right;
+    border-right: 4px @themeFour solid;
+
+    width: 450px;
+    font-family: "journalregular";
+     font-size: 40px;
+     color: @themeTwo;
+
+     margin-left: 400px;
+     padding: 10px;
+}
+.center_block_quote{
+    display: block;
+    margin: auto;
+    border-left: 4px @themeFour solid;
+    width: 450px;
+    font-family: "journalregular";
+     font-size: 40px;
+     color: @themeTwo;
+     border-right: 4px @themeFour solid;
+
+     padding: 10px;
+}
+
+.center_blog_image_holder{
+  display: block;
+  margin: auto;
+
+}
+
+.standard_paragraph{
+     font-family: "cantarellregular";
+     font-size: 20px;
+     text-align:left;
+}
+.caption{
+  font-family: "cantarellregular";
+}
+.blog_section_title{
+         display: block;
+
+       margin: auto;
+       margin-top: 20px;
+       margin-bottom: 20px;
+      color: @themeTwo;
+      border-top: 2px @themeTwo solid;
+      border-bottom: 2px @themeTwo solid;
+      font-size: 36px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+
+
+       font-family: "cantarellregular";
+}
+
+
+/* Admin Panel */
+
+#admin_content{
+  margin-left: 200px;
+}
+
+#left_admin_panel{
+  width: 200px;
+  height: 100%;
+  float: left;
+  position: fixed;
+  background-color: black;
+}
+#in_progress_div{
+  overflow-y: scroll;
+  height: 300px;
+  width: 180px;
+  display: block;
+  margin: auto;
+}
+#published_div{
+  overflow-y: scroll;
+  height: 300px;
+  width: 180px;
+  display: block;
+  margin: auto;
+
+}
+#blog_text_area{
+  resize: none;
+  font-size: 22px;
+  height: 400px;
+  width: 800px;
+  display: block;
+  margin: auto;
+   font-family: "cantarellregular";
+   margin-top: 20px;
+}
+#blog_preview_text_area{
+  resize:none;
+  font-family: "cantarellregular";
+  font-size: 22px;
+  height: 200px;
+  width: 800px;
+  margin-top: 20px;
+}
+#admin_blog_title{
+  resize: none;
+  display: block;
+  margin: auto;
+  font-family: "cantarellregular";
+  font-size: 30px;
+  width: 500px;
+}
+.admin_comment_div{
+   overflow-y: scroll;
+  height: 300px;
+  width: 600px;
+  display: block;
+  margin: auto;
+  background-color: yellow;
+}
+
+/* Image upload */
+#dropbox{
+    background:url('../img/background_tile_3.jpg');
+
+    border-radius:3px;
+    position: relative;
+    margin:80px auto 90px;
+    min-height: 290px;
+    overflow: hidden;
+    padding-bottom: 40px;
+    width: 990px;
+
+    box-shadow:0 0 4px rgba(0,0,0,0.3) inset,0 -3px 2px rgba(0,0,0,0.1);
+}
+
+#dropbox .message{
+    font-size: 11px;
+    text-align: center;
+    padding-top:160px;
+    display: block;
+}
+
+#dropbox .message i{
+    color:#ccc;
+    font-size:10px;
+}
+
+#dropbox:before{
+    border-radius:3px 3px 0 0;
+}
+
+/*-------------------------
+    Image Previews
+--------------------------*/
+
+#dropbox .preview{
+    width:245px;
+    height: 215px;
+    float:left;
+    margin: 55px 0 0 60px;
+    position: relative;
+    text-align: center;
+}
+
+#dropbox .preview img{
+    max-width: 240px;
+    max-height:180px;
+    border:3px solid #fff;
+    display: block;
+
+    box-shadow:0 0 2px #000;
+}
+
+#dropbox .imageHolder{
+    display: inline-block;
+    position:relative;
+}
+
+#dropbox .uploaded{
+    position: absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    background: url('../img/done.png') no-repeat center center rgba(255,255,255,0.5);
+    display: none;
+}
+
+#dropbox .preview.done .uploaded{
+    display: block;
+}
+
+/*-------------------------
+    Progress Bars
+--------------------------*/
+
+#dropbox .progressHolder{
+    position: absolute;
+    background-color:#252f38;
+    height:12px;
+    width:100%;
+    left:0;
+    bottom: 0;
+
+    box-shadow:0 0 2px #000;
+}
+
+#dropbox .progress{
+    background-color:#2586d0;
+    position: absolute;
+    height:100%;
+    left:0;
+    width:0;
+
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.4) inset;
+
+    -moz-transition:0.25s;
+    -webkit-transition:0.25s;
+    -o-transition:0.25s;
+    transition:0.25s;
+}
+
+#dropbox .preview.done .progress{
+    width:100% !important;
+}
+
+

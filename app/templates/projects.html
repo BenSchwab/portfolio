@@ -1,0 +1,57 @@
+{% extends "page_base.html" %}
+{% block imports %}
+<script src = "../static/js/general.js" type="text/javascript"></script>
+{% endblock %}
+{% block content %}
+<div class ="body_platter">
+ <div class = "section_head">
+  <a href="/"><p class = "header_name">Benjamin Schwab</p></a>
+  <p class = "header_divider">|</p>
+  <p class = "header_title">Projects</p>
+</div>
+
+
+<div class = "preview_section">
+
+ <div class="content_square">
+   <img class ="content_square_image" src="../static/images/splinky_icon.png"></img>
+   <p class = "content_square_title">Splinky's Last Stand</p>
+   <div class="content_tag_holder">
+     <img class ="content_square_picture" src="../static/images/seattle.jpg"></img>
+     <img class ="content_square_picture" src="../static/images/seattle.jpg"></img>
+  </div>
+   <div class = "content_square_preview">
+      <div class= "content_square_preview_text">Splinky's Last Stand is an
+        Android game I built after my Freshman year. I built the game engine, the physics engine, and all the graphics from scratch. Although, Splinky's last stand has not flourished on the Android Market, I consider it one of the largest projects I have done to date.</div>
+   </div>
+
+</div>
+<div class="content_square">
+   <img class ="content_square_image" src="../static/images/sat_vocab.png"></img>
+   <p class = "content_square_title">SAT Vocabulary Suite</p>
+     <div class="content_tag_holder">
+      <img class ="content_square_picture" src="../static/images/projects/sat_vocab/satv_two.jpg"></img>
+     <img class ="content_square_picture" src="../static/images/projects/sat_vocab/satv_one.jpg"></img>
+
+  </div>
+   <div class = "content_square_preview">
+      <div class= "content_square_preview_text">This is the first Android app I published. I created it before my Freshman year of college. While, the code of the app makes me cringe, it has been stable for over two years and has helped thousands of students study for SAT vocab on the go.</div>
+   </div>
+
+</div>
+<a href= "/gameoflife"><div class="content_square">
+   <img class ="content_square_image" src="../static/images/game_of_life.png"></img>
+   <p class = "content_square_title">Game of Life</p>
+   <div class="content_tag_holder">
+     <img class ="content_square_picture" src="../static/images/projects/game_of_life/screen_one.jpg"></img>
+      <img class ="content_square_picture" src="../static/images/projects/game_of_life/screen_two.jpg"></img>
+
+  </div>
+   <div class = "content_square_preview">
+      <div class= "content_square_preview_text">A project I built during my Sophomore year for a presentation for the Universtiy Scholars program.The Game of Life app is a full featured Game of Life simulation and javascript library to embed a Game of Life app in any website.</div>
+   </div>
+
+</div>
+</div></a>
+
+{% endblock %}

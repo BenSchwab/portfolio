@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<link rel='stylesheet' type='text/css' href='../static/css/stylesheet.css'/>
+	<title>Conway's Game of Life</title>
+	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+	<script  type="text/javascript" src="../static/lib/jquery.simplemodal-1.4.4.js"></script>
+
+	<script type="text/javascript" src="../static/lib/raphael-min.js"></script>
+	<script type="text/javascript" src="../static/lib/colorwheel.js"></script>
+</head>
+<body>
+
+	<div id = 'header' class = 'shadow_down'>
+		<div id = 'back' class = 'subheader' style="width: 22%">
+			<a href= "/" style="text-decoration:none;"><p class = 'header_text' >BenjaminSchwab.info</p></a>
+
+		</div>
+		<div id = 'previous_module' class = 'subheader'>
+			<p class = 'header_text'>Previous Module</p>
+		</div>
+		<div id= 'current_module' class = 'subheader' style="width: 17%">
+
+			<p class = 'header_text'>Current Module</p>
+			<p class = 'header_text_sub'>1: Three simple rules</p>
+			<p class = 'header_text_two'>Directions!</p>
+
+		</div>
+		<div id = 'next_module' class = 'subheader' style="width: 15%">
+			<p class = 'header_text'>Next Module</p>
+		</div>
+		<a href="https://github.com/BenSchwab/benjaminschwab/tree/master/public">
+			<div id = 'fork' class = 'subheader'>
+				<p class = 'header_text'>Get the Code</p>
+			</div>
+		</a>
+		<div id ='pulldown_div' class='button_div' width='60' height ='60'>
+			<img id= 'drop_down_arrow' src = '../static/images/game_of_life/pan_down.png' width="60" height="60"/>
+		</div>
+
+	</div>
+
+
+	<div id = 'center_content'>
+		<div id = 'left_toolbar' class = 'shadow_blue'>
+			<div id='wheel_div' width='100' height='100'>
+				<div id = 'color_wheel'></div>
+			</div>
+			<div class = 'horizontal_holder'>
+				<div  id ='update_button' class = 'button_div inline'>
+					<img class = 'control_button' width="60" height="60" src="../static/images/game_of_life/play_arrow.png"/>
+				</div>
+				<div  id ='clear_button' class = 'button_div inline'>
+					<img class = 'control_button' width="60" height="60" src="../static/images/game_of_life/clear_button.png"/>
+				</div>
+			</div>
+			<div class = 'horizontal_holder'>
+				<div class = 'button_div inline' id ='start_button'>
+					<img class = 'control_button' width="60" height="60" src="../static/images/game_of_life/auto_play.png"/>
+				</div>
+				<div class = 'button_div inline' id ='stop_button'>
+					<img class = 'control_button' width="60" height="60" src="../static/images/game_of_life/pause_sim.png"/>
+				</div>
+			</div>
+			<div class = 'horizontal_holder'>
+				<div class = 'button_div inline' id ='unzoom_button'>
+					<img class = 'control_button' width="60" height="60" src="../static/images/game_of_life/zoom_out.png"/>
+				</div>
+				<div class = 'button_div inline' id ='zoom_button'>
+					<img class = 'control_button' width="60" height="60" src="../static/images/game_of_life/zoom_in.png"/>
+				</div>
+			</div>
+			<div class = 'horizontal_holder'>
+				<div class = 'button_div inline' id='slow_down_button'>
+					<img class = 'control_button' width="60" height="60" src="../static/images/game_of_life/slow_down.png"/>
+				</div>
+				<p id='speed_multiplier'> 1.0x</p>
+				<div class = 'button_div inline' id='speed_up_button'>
+					<img class = 'control_button' width="60" height="60" src="../static/images/game_of_life/speed_up.png"/>
+				</div>
+			</div>
+
+
+			<div id= 'zoom_viewer_box'>
+				<p> </p>
+				<canvas id="sim_canvas" width="100" height="100" style="border:3px solid #84b8d9;"></canvas>
+			</div>
+
+
+		</div>
+
+		<div id ='active_holder'>
+
+			<div id='top_box'>
+				<div class = 'button_div_two' id='pan_up'>
+					<img class = 'control_button' width="60" height="60" src="../static/images/game_of_life/pan_up.png"/>
+				</div>
+
+			</div>
+			<div id = 'middle_box'>
+				<div id ='left_box'>
+					<div class = 'button_div_two' id = 'pan_left'>
+						<img class = 'control_button' width="60" height="60" src="../static/images/game_of_life/pan_left.png"/>
+					</div>
+
+				</div>
+				<canvas id="my_canvas"  class = 'shadow_blue' width="500" height="500" style="border:1px solid #000000;"></canvas>
+				<div id ='right_box'>
+					<div class = 'button_div_two' id = 'pan_right'>
+						<img class = 'control_button' width="60" height="60" src="../static/images/game_of_life/right_pan.png"/>
+					</div>
+
+				</div>
+			</div>
+
+			<div id='bottom_box'>
+				<div class = 'button_div_two' id='pan_down'>
+					<img class = 'control_button' width="60" height="60" src="../static/images/game_of_life/pan_down.png"/>
+				</div>
+
+			</div>
+		</div>
+
+		<div id = 'right_toolbar' class = 'shadow_blue'>
+			<p class = 'shape_header'>Crawlers</p>
+			<div class = 'button_div inline' id= 'space_ship'>
+				<p class = 'pre_made_shape'>Glider</p>
+			</div>
+			<div class = 'button_div inline' id ='lwss'>
+				<p class = 'pre_made_shape'>LWSS</p>
+			</div>
+			<p class = 'shape_header'>Oscillators</p>
+			<div class = 'button_div inline' id='pulsar'>
+				<p class = 'pre_made_shape'>Pulsar</p>
+			</div>
+			<div class = 'button_div inline' id='beacon'>
+				<p class = 'pre_made_shape'>Beacon</p>
+			</div>
+			<div class = 'button_div inline' id='toad'>
+				<p class = 'pre_made_shape'>Toad</p>
+			</div>
+			<p class = 'shape_header'>Still Life</p>
+			<div class = 'horizontal_holder'>
+				<div class = 'button_div inline' id='block'>
+					<p class = 'pre_made_shape'>Block</p>
+				</div>
+				<div class = 'button_div inline' id='hive'>
+					<p class = 'pre_made_shape'>Hive</p>
+				</div>
+			</div>
+			<div class = 'horizontal_holder'>
+				<div class = 'button_div inline' id='loaf'>
+					<p class = 'pre_made_shape'>Loaf</p>
+				</div>
+				<div class = 'button_div inline' id='boat'>
+					<p class = 'pre_made_shape'>Boat</p>
+				</div>
+			</div>
+
+			<p class = 'shape_header' id='rg'>Generators</p>
+			<div class = 'button_div inline' id='rand_gen'>
+				<p class = 'pre_made_shape' style="font-size:10px">RandGenerator</p>
+			</div>
+			<div class = 'button_div inline' id='gospel_gun'>
+				<p class = 'pre_made_shape' style="font-size:10px">Gospel Gun</p>
+			</div>
+			<p class = 'shape_header'>Methuselahs</p>
+			<div class = 'button_div inline' id='r_pent'>
+				<p class = 'pre_made_shape' style="font-size:10px">R-pentomino</p>
+			</div>
+
+
+		</div>
+	</div>
+
+	<!-- These are html elements that will be injected into the page. Research a more elegant organize method.-->
+
+	<div id="basic-modal-content-0">
+		<h4>Futures through simulation: Conway's Game of Life</h4>
+		<h3>Module One: Three Simple Rules</h3>
+		<p>In 1940, John von Neumann discovered a mathematical machine that could build copies of itself by following a set of very complicated rules. John Conway, a British mathematician was fascinated with this concept. He set out to prove that a similar machine could be built with much simpler rules. He succeeded.</p>
+		<p>Below is a video that introduces Conway's discovery that led to the creation of new field of study called cellular automata.</p>
+		<iframe width="560" height="315" src="http://www.youtube.com/embed/CgOcEZinQ2I" frameborder="0" allowfullscreen></iframe>
+		<p>Cellular Automata are truly interdisciplinary creations. They merge math and computer science to give insights into a wide variety of disciplines including philosophy, biology, and economics.</p>
+		<p>In this tutorial we will use the results and implications of Conway's Game of Life to try to better explain our future. I also hope that
+			working through this tutorial will give you a concentrated summary of over forty years of discoveries made in Conway's grid.</p>
+
+			<p> In module one I hope that you will get familiar with the tools I created to explore the game of life. Remember the three rules that govern the Game of Life.</p>
+			<ol>
+				<li>If a cell has one or fewer neighbors it will die from loneliness.</li>
+				<li>If a cell more than three neighbors it will die from overpopulation.</li>
+				<li>If a cell has exactly three neighbors it will become lit, or alive.</li>
+			</ol>
+			<p>In this module you will have access to a 100 by 100 grid. A true Conway Grid would have an infinite number of cells. But with limitations on computing, the number of cells in this tutorial is finite. The grid is a toroidal array, which means that the top connects to the bottom, and the left connects to the right. Push escape or exit out of this dialogue to start your journey!</p>
+
+		</div>
+		<div id="basic-modal-content-1">
+			<h4>Futures through simulation: Conway's Game of Life</h4>
+			<h3>Module Two: It's all in the seed</h3>
+			<p>One remarkable aspect about Conway's Game of Life is that it is completely deterministic. Mathematicians call the initial state of the grid before a user hits 'start' the 'seed' of the grid. This seed contains all the information necessary to predict the state of the grid at
+				every generation.</p>
+				<p>This brings us to the first concept I want you to consider as you proceed through the tutorial. If our universe was started with a finite 'seed' (the big bang) do we have any more control over our future than a cell in Conway's Grid does? This is a classic argument made by fatalists.</p>
+
+				<p>Included in the second module is a toolbar on the right with initial seeds that create 'life-forms' in Conway's game of life. You can plant these seeds on your grid, and preview what they evolve into in a pop-up window in the top-right corner of your screen. Below is a description of the life forms you will find.</p>
+
+				<ol>
+					<li><p>Crawlers</p><p>A crawler is a pattern which oscillates between states while appearing to move through the grid.</p></li>
+					<li><p>Oscillators</p><p>An oscillator is a pattern which switches between a fixed number of states while remaining stationary.</p></li>
+					<li><p>Still Life</p><p>Still lives are simply seeds that do not change between generations.</p></li>
+					<li><p>Generators</p>Generators are a seed pattern that creates other life forms. The one included in this tutorial is called the 'Gospel Gun'. The Gospel Gun was created in 1970 by MIT scientists led by Bill Gosper in response to a challenge from Conway to
+						disprove that a seed could not produce an infinitely lasting grid. The Gospel Gun will produce gliders (a crawler) for ever.</li>
+						<li><p>Methuselahs</p> <p>Methuselahs are initial seeds that take many thousands of generations to stabilize. I included the R-Pentimino as a sample Methuselah. It is fascinating how seed with only 4 cells can create chaos for thousands of turns.</p></li>
+					</ol>
+
+					<p>In this module combine various seeds and witness the chaos that ensues!</p>
+
+
+				</div>
+				<div id="basic-modal-content-2">
+					<h4>Futures through simulation: Conway's Game of Life</h4>
+					<h3>Module Three: A Quantum Leap</h3>
+					<p>As you probably have noticed many patterns you planted in the second module resurfaced by chance as the simulation ran. (Not really of course because everything is determined in the initial seed - but chance so much as in the seed you planted was probably random.) </p>
+					<p> It is very easy to feel attached to certain life forms such as the glider. The way they move resembles life we are familiar with. But why should it only 'resemble' life? Maybe it is life. Maybe we seemingly complex humans are just following the same simple rules that exist in the universe, and the only difference between us and say a rock, is that our information is arranged in very specific way, just like a glider.</p>
+					<p>I hope you consider the implications of gliders and other crawlers representing the complex life we are familiar with in our universe. Ask yourself if the glider's exististance is really deterministic if the glider is kept from the information that determines its future just as we are.</p>
+					<p>Of course I would be remiss not to mention the idea of randomness. Recent quantum research provides strong evidence that there is indeed an inherent element of randomness in the universe. To reflect this in the Game of Life I created a random generator life form. </p>
+					<p>In this module, a random generator will now be available to you. The generator has a 5% chance to create either a glider, a spaceship, or a R-pentimino within its vicinity.</p>
+				</div>
+				<div id="basic-modal-content-3">
+					<h4>Futures through simulation: Conway's Game of Life</h4>
+					<h3>Module Four: A step back</h3>
+					<p>You can't fully appreciate Conway's Game of Life until you zoom out. This module contains a 500 by 500 grid. (Be aware that doing the
+						computation on a grid this size is highly resource intensive and therefore it is not possible to speed up the simulation).</p>
+						<p>Try planting gospel guns and r-pentimino's with different colors over the grid. See if these 'societies' interact, and if their 'citizens' will mix their colors to create a new society. If you are curious, the color-mixing algorithm is a simple algorithm that averages the red, green, and blue components of the three parent cells that create a child cell. Thus, over time a rouge color entering a larger single color society will tend to be dominated by the color of the society.</p>
+
+					</div>
+					<div id="basic-modal-content-4">
+						<h4>Futures through simulation: Conway's Game of Life</h4>
+						<h3>Sandbox</h3>
+						<p>Enjoy playing with life on a 250 by 250 grid!</p>
+
+					</div>
+					<div id="basic-modal-content-5">
+						<h4>Futures through simulation: Conway's Game of Life</h4>
+						<h3>Sand box</h3>
+						<p></p>
+						<p>What you may have noticed playing so far. Researches were asked</p>
+						<p>Examples:</p>
+						<div class='side_track'></div>
+					</div>
+
+					<div id='drop_down_menu' class='shadow_blue'>
+						<div class = 'dd_div' id ='mOne'>
+							<p class ='menu_title'> Module One</p>
+							<p class = 'menu_subtitle'>"Three Simple Rules"</p>
+						</div>
+						<div class = 'dd_div' id= 'mTwo'>
+							<p class ='menu_title'> Module Two</p>
+							<p class = 'menu_subtitle'> "It's all in the seed"</p>
+						</div>
+						<div class = 'dd_div' id = 'mThree'>
+							<p class ='menu_title'> Module Three</p>
+							<p class = 'menu_subtitle'> "A Deterministic Universe"</p>
+						</div>
+						<div class = 'dd_div' id = 'mFour'>
+							<p class ='menu_title'> Module Four</p>
+							<p class = 'menu_subtitle'> "A Quantum Leap"</p>
+						</div>
+						<div class = 'dd_div' id = 'mSix'>
+							<p class ='menu_title'> Sandbox</p>
+							<p class = 'menu_subtitle'>"The Game of Life"</p>
+						</div>
+
+					</div>
+
+
+
+
+
+				</body>
+				<canvas id = 'preview_canvas'> </canvas>
+				<div id = 'pop_up' class='corner_popup'></div>
+				<div id = 'pop_up_right' class='right_corner_popup'></div>
+				<div id = 'todo_list'>
+					<p class = 'todo_head'>Try these ideas:</p>
+
+					<p class = 'todo_text todo_0'>Use your mouse to activate a few squares on the grid. See if you can predict what will happen when you push the continue button.</p>
+					<p class = 'todo_text todo_0'>Familiarize yourself with the controls. Notice you can click the buttons in the left panel or use your keyboard.</p>
+					<p class = 'todo_text todo_0'>Create a random seed. And push autoplay (space). Zoom in and out. Speed up and slow down the simulation.</p>
+					<p class = 'todo_text todo_0'>Change the color of the cells you place on the grid.</p>
+					<p class = 'todo_text todo_1'>Select a life form from the right toolbox. It will turn yellow when selected.</p>
+					<p class = 'todo_text todo_1'>Drag your mouse to the grid and plant the life forms onto the grid as many times as you would like.</p>
+					<p class = 'todo_text todo_1'>Return to the side bar and click the button again to turn off the pattern dropper. Now combine more than one pattern!</p>
+					<p class = 'todo_text todo_1'>Remember to change the colors of the cells you plant!</p>
+					<p class = 'todo_text todo_2'>Plant more shapes including a random generator.</p>
+					<p class = 'todo_text todo_2'>Random generated life forms will appear in white.</p>
+					<p class = 'todo_text todo_3'>Plant R-pentominios and Gosper Gun's in different colors to create socities!</p>
+					<p class = 'todo_text todo_4'>Have fun!</p>
+
+				</div>
+
+
+
+				<script src="../static/js/game.js"></script>
+				</html>
