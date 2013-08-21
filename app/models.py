@@ -47,6 +47,7 @@ class BlogPost(db.Model):
     previewImage = db.Column(db.String)
     preview = db.Column(db.String)
     published = db.Column(db.Boolean)
+    views = db.Column(db.Integer)
     def getDate(self):
         print self.date.date()
 
@@ -63,7 +64,6 @@ class BlogComment(db.Model):
     content = db.Column(db.String)
     blog_id = db.Column(db.Integer, db.ForeignKey('blog_post.id'))
     blog = db.relationship("BlogPost", backref = db.backref('comments'))
-    views = db.Column(db.Integer)
 
 
     def __repr__(self):

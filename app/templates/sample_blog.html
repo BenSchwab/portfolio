@@ -5,7 +5,7 @@
 {% block content %}
 <div class ="body_platter">
   <div class = "section_head">
-    <p class = "header_name">A really cool post</p>
+    <p class = "header_name">{{ post_content.blogTitle}}</p>
     <p class = "header_divider">|</p>
     <p class = "header_title">May 12, 2013</p>
   </div>
@@ -13,7 +13,7 @@
   <div class = "preview_section">
 
 
-      {{ post_content|safe}}
+      {{ post_content.content|safe}}
 
 
 
@@ -23,8 +23,16 @@
 
 
 <div class = "body_platter">
-  <p>One comment</p>
+  <div class = 'leave_comment_container'>
+
+  </div>
+  <div class='comment_container'>
+    {% for comment in blog_comments %}
+      <p>comment.name</p>
+      <p>comment.content</p>
+      {% endfor %}
+  </div>
    <p>Two comment</p>
-    <p>Three comment</p>
+  <p>Three comment</p>
 </div>
 {% endblock %}

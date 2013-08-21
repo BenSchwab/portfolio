@@ -9,7 +9,7 @@ jQuery(document).ready(function($){
      $(this).animate({opacity:'0'});
   }
   );
-   $('.blog_square_preview').hover(
+   $('.circle_blog_preview_text').hover(
     function () {
       //alert("animating");
       $(this).animate({opacity:'1'});

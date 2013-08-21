@@ -9,26 +9,28 @@
     <p class = "header_divider">|</p>
     <p class = "header_title">Blog</p>
   </div>
+  <div id='blog_search_controls'>
+    <form >
+      <input type="text" name="fname" class = "round_input"><br>
+    </form>
+  </div>
 
   <div class = "preview_section">
+      {% for blog in published_blogs %}
+      <a href="../blog/{{blog.id}}">
+        <div class ="circle_blog_preview">
+          <div class="circle_blog_image_div">
+            <img class="circle_blog_image" src="../static/images/seattle.jpg"/>
+             </div>
+             <p class ="circle_blog_preview_title">{{blog.blogTitle}}</p>
 
-  {% for blog in published_blogs %}
+          <div class="circle_blog_preview_text" >
+            <p class ="name_subtext">{{blog.preview}}</p>
+          </div>
+      </div>
+    </a>
 
-  <div class="blog_square">
-   <img class ="blog_square_image" src="../static/images/seattle.jpg"></img>
-   <p class = "blog_square_title">{{blog.blogTitle}}</p>
-   <div class = "blog_square_preview">
-      <div class= "blog_square_preview_text">{{blog.preview}}</div>
-   </div>
-   <div class = "blog_preview_date">{{blog.date}}{{blog.getDate()}}</div>
-   <div class="blog_tag_holder">
-    <img class ="blog_square_tag" src="../static/images/seattle.jpg"></img>
-     <img class ="blog_square_tag" src="../static/images/seattle.jpg"></img>
-   </div>
-</div>
-{% endfor %}
-
-
+    {% endfor %}
 
 </div>
 

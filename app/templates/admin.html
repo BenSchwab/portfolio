@@ -23,13 +23,16 @@
         {% endfor %}
 
    </div>
-   <button type="button">New Blog Post</button>
+   <form name="blog_new" action="" method="POST">
+      <button type="submit" value="new_blog">New Blog Post</button>
+    </form>
 </div>
 <div id ="admin_content">
 
-   <form name="blog_update" action="../admin/save" method="POST">
+   <form name="blog_update" action="" method="POST">
+       {{form.hidden_tag()}}
    <div class = "body_platter">
-   <h3 id = "admin_label">Title:</h3>
+   <h3 class = "admin_label_black">Title:</h3>
 
    {{ form.title(id='admin_blog_title', value = current_blog.blogTitle) }}
 
@@ -40,11 +43,13 @@
          <button type="button" id ="admin_right_quote">Insert Right Quote</button>
           <button type="button" id ="admin_center_quote">Instert Center Quote</button>
    </div>
-
+   <h3 class = "admin_label_black">Content:</h3>
    {{ form.content(id = 'blog_text_area', content = current_blog.content|safe)}}
+   <h3 class = "admin_label_black">Preview:</h3>
    {{ form.preview(id = 'blog_preview_text_area', content = current_blog.preview) }}
+    <h3 class = "admin_label_black">Published:</h3>
    {{form.published(value = current_blog.published)}}
-
+   <h3 class = "admin_label_black">Comments</h3>
    <div class = "admin_comment_div">
          {% for comment in current_blog.commments %}
          <p>{{comment.content}}</p>
@@ -60,15 +65,20 @@
             <span class="message">Drop images here to upload. <br /><i>(they will only be visible to you)</i></span>
         </div>
 
-
         <!-- Including the HTML5 Uploader plugin -->
         <script src="../static/js/jquery.filedrop.js"></script>
 
         <!-- The main script file -->
         <script src="../static/js/script.js"></script>
 </div>
-<input type="submit" name="publish" id ="admin_publish">Publish</button>
-<input type="submit" name="unpublish" id ="admin_unpublish">Unpublish</button>
+<p class = 'admin_label'>
+  Publish <br>
+<input type="submit" name="publish" id ="admin_publish"></button>
+</p>
+<p class = 'admin_label'>
+Unpublish <br>
+<input type="submit" name="unpublish" id ="admin_unpublish"></button>
+</p>
 </form>
 
 

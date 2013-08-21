@@ -1,8 +1,5 @@
 jQuery(document).ready(function($){
 
-
-
-
    $('#head_text').hover(
     function () {
       //alert("animating");

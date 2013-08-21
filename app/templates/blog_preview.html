@@ -1,6 +1,10 @@
- <div class = "preview_image_holder" >
+
+  {% for blog in published_blogs %}
+
       <image class="center_preview_image" src = "../static/images/seattle.jpg" ></image>
-      <div class="center_preview_image_text_div" >
+     <div class = "preview_image_holder"><div class="center_preview_image_text_div" >
           <p class ="center_preview_image_text">Life in Seattle</p>
       </div>
-</div>
+   </div>
+
+  {% endfor %}
