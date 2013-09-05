@@ -2,17 +2,18 @@ from flask import request, redirect, render_template, url_for, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.views import MethodView
 from flask import jsonify
-from forms import LoginForm, BlogForm
+from forms import LoginForm, BlogForm, BlogCommentForm
 from app import app, db, lm
 from app.models import BlogPost, BlogComment, Admin
 from datetime import datetime
 import os
+import pdb
+from sqlalchemy import desc
 
 @app.before_request
 def before_request():
     g.user = current_user
 
-#There might be bugs here..
 @lm.user_loader
 def load_user(userid):
     return Admin.query.get(int(userid))
@@ -20,14 +21,17 @@ def load_user(userid):
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/index', methods = ['GET', 'POST'])
 def index():
-    return render_template("main.html")
+    blogs = BlogPost.query.filter_by(published=True)
+    return render_template("main.html", blogs = blogs)
 
 @app.route('/blog/<post_title>/add_comment', methods = ['POST'])
 def commentOnPost(post_title="rando"):
     #Todo finish this - create blog comment and add it to the proper post
-    form = CommentForm()
+    form = BlogCommentForm()
     if form.validate_on_submit():
-        comment = BlogComment(name = "", date = "", score = 0, content = "", blog_id =, blog =)
+        blog = BlogPost.query.filter_by(id=post_title)
+        comment = BlogComment(name = form.name, date = datetime.now(), score = 0, content = form.content, blog_id =blog.id)
+        print "Created comment "+comment
     return render_template(blogPost(post_title))
 
 
@@ -36,11 +40,11 @@ def commentOnPost(post_title="rando"):
 def blogPost(post_title = "rando"):
     #do on or with title
     post_content = BlogPost.query.filter_by(id=post_title, published = True)
-    blog_comments = BlogComment.query.filter_by(id=post_title)
+    commentForm = BlogCommentForm()
     if post_content.count() == 0:
         return redirect(url_for('blog'))
-
-    return render_template("sample_blog.html", post_content = post_content[0], blog_comments = blog_comments)
+    blog_comments = post_content[0].comments
+    return render_template("sample_blog.html", post_content = post_content[0], blog_comments = blog_comments, form = commentForm)
 
 @app.route('/picupload', methods = ['GET', 'POST'])
 def picUpload():
@@ -83,8 +87,15 @@ def writing():
     return render_template("writing.html")
 
 @app.route('/writing/acceleration', methods = ['GET', 'POST'])
-def writing():
-    return render_template("writing.html")
+def acceleration():
+    return render_template("acceleration.html")
+
+@app.route('/writing/theshot', methods = ['GET', 'POST'])
+def theShot():
+    return render_template("theshot.html")
+@app.route('/writing/realityoffiction', methods = ['GET', 'POST'])
+def realityoffiction():
+    return render_template("realityfiction.html")
 
 @app.route('/getAccelerationText', methods = ['GET'])
 def getAccelerationText():
@@ -110,6 +121,10 @@ def adminBlogEdit(post_id = 1):
     unpublished_blogs = BlogPost.query.filter_by(published=False)
     blog = BlogPost.query.get(post_id)
     form = BlogForm()
+    form.content.data = blog.content
+    form.preview.data = blog.preview
+    form.published.data = blog.published
+    print blog.content
     #print(request.args.get('value'))
     #print("what!")
     if form.validate_on_submit():
@@ -117,7 +132,9 @@ def adminBlogEdit(post_id = 1):
        #b = BlogPost(blogTitle = form.title.data, date= datetime.now(), content=form.content.data, preview=form.preview.data, published=form.published.data, views=0, previewImage="../static/images/seattle.jpg" )
        #db.session.add(b)
        blog.blogTitle = form.title.data
-       blog.blogContet = form.content.data
+       blog.content = form.content.raw_data[0]
+
+       print form.content.raw_data[0]
        blog.preview = form.preview.data
        blog.published = form.published.data
        db.session.add(blog)
@@ -125,6 +142,8 @@ def adminBlogEdit(post_id = 1):
        print "I just updated something!"
     else:
         print "Form failed validation"
+        #pdb.set_trace()
+        print blog.comments
     return render_template("admin.html", published_blogs = published_blogs, unpublished_blogs = unpublished_blogs, current_blog = blog, form = form)
 
 @app.route('/adminlogin', methods = ['GET', 'POST'])
@@ -164,12 +183,16 @@ def getBlogPrevew():
     basedir = os.path.abspath(os.path.dirname(__file__))
     filename = os.path.join(basedir, 'templates/blog_preview.html');
     content = open(filename, 'r').read()
-    published_blogs = BlogPost.query.filter_by(published=True)
+    #published_blogs = BlogPost.query.filter_by(published=True)
     #see what this returns
-    rhtml =render_template("blog_preview.html", published_blog=published_blogs)
+    #rhtml =render_template("blog_preview.html", published_blog=published_blogs)
     #how to dynamically grab blog posts?
-    print ("this should be html")
-    return jsonify(html=rhtml)
+    #print ("this should be html")
+    blogs = BlogPost.query.filter_by(published=True).order_by(desc(BlogPost.date)).limit(3)
+    print blogs
+
+
+    return render_template("blog_preview.html", blogs = blogs)
 
 @app.route('/getContactPreview', methods = ['GET'])
 def getContactPrevew():

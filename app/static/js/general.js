@@ -9,13 +9,13 @@ jQuery(document).ready(function($){
      $(this).animate({opacity:'0'});
   }
   );
-   $('.content_square_preview').hover(
+   $('.circle_blog_image_div').hover(
     function () {
       //alert("animating");
-      $(this).animate({opacity:'1'});
+      $(this).parent().children('.circle_blog_preview_text').animate({opacity:'1'});
    },
    function () {
-     $(this).animate({opacity:'0'});
+     $(this).parent().children('.circle_blog_preview_text').animate({opacity:'0'});
   }
   );
 

@@ -23,15 +23,33 @@
 
 
 <div class = "body_platter">
+  <div id='comment_toggle'>Hmm</div>
   <div class = 'leave_comment_container'>
+    <p id="name_reminder">Name is required.</p>
+    <p id="content_reminder">Please add your comment.</p>
+     <form action="" method="post" name="leavecomment">
+        {{form.hidden_tag()}}
+
+            Name:<br>
+            {{form.name(id='name_box')}}<br>
+
+
+          Comment: <br>
+          {{form.content(id='comment_box')}}
+        <p><input type="submit"></p>
+    </form>
 
   </div>
-  <div class='comment_container'>
+
     {% for comment in blog_comments %}
-      <p>comment.name</p>
-      <p>comment.content</p>
-      {% endfor %}
-  </div>
+    <div class='comment_container'>
+      <div></div>
+      <div></div>accleration.jpg
+      <p>{{comment.name}}</p>
+      <p>{{comment.content}}</p>
+    </div>
+    {% endfor %}
+
    <p>Two comment</p>
   <p>Three comment</p>
 </div>

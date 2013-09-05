@@ -10,10 +10,12 @@
     <p class = "header_title">Blog</p>
   </div>
   <div id='blog_search_controls'>
+    <h1>Search Blogs</h1>
     <form >
       <input type="text" name="fname" class = "round_input"><br>
     </form>
   </div>
+  <div>Insert View Toggle here</div>
 
   <div class = "preview_section">
       {% for blog in published_blogs %}
@@ -26,6 +28,9 @@
 
           <div class="circle_blog_preview_text" >
             <p class ="name_subtext">{{blog.preview}}</p>
+          </div>
+           <div class="circle_blog_preview_date" >
+            <p class ="date">{{blog.getDate()}}</p>
           </div>
       </div>
     </a>

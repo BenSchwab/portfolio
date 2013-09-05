@@ -7,9 +7,13 @@ class LoginForm(Form):
 
 class BlogForm(Form):
    title = TextField('title')
-   content = TextAreaField('content', default = "please add content")
+   content = TextAreaField('content')
    preview = TextAreaField('preview')
    published = BooleanField(False)
+
+class BlogCommentForm(Form):
+   name = TextField()
+   content = TextAreaField()
 
 
 

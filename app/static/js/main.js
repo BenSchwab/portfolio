@@ -18,6 +18,15 @@ jQuery(document).ready(function($){
      $(this).animate({opacity:'0'});
   }
   );
+$('.center_preview_image_text_div_small').hover(
+    function () {
+      //alert("animating");
+      $(this).animate({opacity:'.8'});
+   },
+   function () {
+     $(this).animate({opacity:'0'});
+  }
+  );
    //TODO: fix bug about disapeering on hover. Could be caused by..
    var curHighlight = $('#projects_div').children(".section_highlight");
    curHighlight.show();
@@ -49,9 +58,16 @@ jQuery(document).ready(function($){
 
          $("#preview_holder").children().fadeOut(300).promise().done(function() {
           $.get(command, function(data) {
+            $("#preview_holder").children().remove();
 
-           $("#preview_holder").children().remove();
-           $('#preview_holder').append(data['html']).hide().fadeIn(500);
+            if(command=="/getBlogPreview"){
+               $('#preview_holder').append(data).hide().fadeIn(500);
+            }
+            else{
+
+              $('#preview_holder').append(data['html']).hide().fadeIn(500);
+
+            }
            $('.center_preview_image_text_div').hover(
              function () {
                   //alert("animating");
