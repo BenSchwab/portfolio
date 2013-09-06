@@ -31,7 +31,7 @@ def commentOnPost(post_title="rando"):
     if form.validate_on_submit():
         blog = BlogPost.query.filter_by(id=post_title)
         comment = BlogComment(name = form.name, date = datetime.now(), score = 0, content = form.content, blog_id =blog.id)
-        print "Created comment "+comment
+        #print "Created comment "+comment
     return render_template(blogPost(post_title))
 
 
@@ -48,7 +48,6 @@ def blogPost(post_title = "rando"):
 
 @app.route('/picupload', methods = ['GET', 'POST'])
 def picUpload():
-    print "Picture attempted to be uploaded"
     #should use secure file if uploader is not trusted. For personal use this
     file = request.files['pic']
     basedir = os.path.abspath(os.path.dirname(__file__))
@@ -68,6 +67,11 @@ def splinky():
 @app.route('/projects/satvocab')
 def satVocab():
     return render_template("satvocab.html")
+
+
+@app.route('/projects/androidbluetoothcontroller')
+def bluetooth():
+    return render_template("androidbluetoothcontroller.html")
 
 @app.route('/blog', methods = ['GET', 'POST'])
 def blog():
@@ -117,33 +121,39 @@ def savePost():
 @login_required
 def adminBlogEdit(post_id = 1):
     #logout_user()
-    published_blogs = BlogPost.query.filter_by(published=True)
-    unpublished_blogs = BlogPost.query.filter_by(published=False)
+
     blog = BlogPost.query.get(post_id)
     form = BlogForm()
     form.content.data = blog.content
     form.preview.data = blog.preview
     form.published.data = blog.published
-    print blog.content
+    #print blog.content
     #print(request.args.get('value'))
     #print("what!")
     if form.validate_on_submit():
         #continue editing hereself.
        #b = BlogPost(blogTitle = form.title.data, date= datetime.now(), content=form.content.data, preview=form.preview.data, published=form.published.data, views=0, previewImage="../static/images/seattle.jpg" )
        #db.session.add(b)
+      # pdb.set_trace()
        blog.blogTitle = form.title.data
        blog.content = form.content.raw_data[0]
+       blog.preview = form.preview.raw_data[0]
+       blog.published = form.published.label.text
 
-       print form.content.raw_data[0]
-       blog.preview = form.preview.data
-       blog.published = form.published.data
+       print blog.content
+       print blog.preview
+       print blog.published
+
        db.session.add(blog)
        db.session.commit()
-       print "I just updated something!"
+       #print "I just updated something!"
     else:
-        print "Form failed validation"
-        #pdb.set_trace()
+        #print "Form failed validation"
+
         print blog.comments
+
+    published_blogs = BlogPost.query.filter_by(published=True)
+    unpublished_blogs = BlogPost.query.filter_by(published=False)
     return render_template("admin.html", published_blogs = published_blogs, unpublished_blogs = unpublished_blogs, current_blog = blog, form = form)
 
 @app.route('/adminlogin', methods = ['GET', 'POST'])
@@ -189,7 +199,7 @@ def getBlogPrevew():
     #how to dynamically grab blog posts?
     #print ("this should be html")
     blogs = BlogPost.query.filter_by(published=True).order_by(desc(BlogPost.date)).limit(3)
-    print blogs
+    #print blogs
 
 
     return render_template("blog_preview.html", blogs = blogs)

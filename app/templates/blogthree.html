@@ -9,6 +9,7 @@
     <p class = "header_divider">|</p>
     <p class = "header_title">Blog</p>
   </div>
+  <!--
   <div id='blog_search_controls'>
     <h1>Search Blogs</h1>
     <form >
@@ -16,6 +17,7 @@
     </form>
   </div>
   <div>Insert View Toggle here</div>
+  -->
 
   <div class = "preview_section">
       {% for blog in published_blogs %}
@@ -30,7 +32,7 @@
             <p class ="name_subtext">{{blog.preview}}</p>
           </div>
            <div class="circle_blog_preview_date" >
-            <p class ="date">{{blog.getDate()}}</p>
+              <p>{{blog.getDate()}}</p>
           </div>
       </div>
     </a>

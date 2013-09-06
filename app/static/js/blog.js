@@ -1,7 +1,6 @@
 jQuery(document).ready(function($){
 
-  var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"
-  "Spt", "Oct", "Nov", "Dec"]
+  var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug","Spt", "Oct", "Nov", "Dec"]
    $('#home_shot_text').hover(
     function () {
       //alert("animating");

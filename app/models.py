@@ -50,7 +50,9 @@ class BlogPost(db.Model):
     views = db.Column(db.Integer)
     comments = db.relationship("BlogComment")
     def getDate(self):
-        return self.date.date()
+        formatedDate = self.date.strftime('%m/%d/%y')
+        print formatedDate
+        return formatedDate
 
 
     def __repr__(self):
