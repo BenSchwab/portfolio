@@ -1,5 +1,7 @@
 jQuery(document).ready(function($){
 
+  $('.project_preview_picture').hide();
+
   var GoLImage = "../static/images/projects/game_of_life/screen_two.jpg";
   var SplinkyImage = "../static/images/projects/splinky/device-2012-07-19-173433.png";
   var SatVocabImage = "../static/images/projects/sat_vocab/satv_one.jpg";
@@ -12,7 +14,7 @@ jQuery(document).ready(function($){
   imageMapping["JavaGameControllerImage"] = JavaGameControllerImage;
 
   textMapping["GoLImage"] = "A javascript Conway Game of Life tutorial and simulator.";
-  textMapping["SplinkyImage"] = "Splinky's Last stand is space-shooting, tower-defense, ridiculous weapon filled android game.";
+  textMapping["SplinkyImage"] = "Splinky's Last Stand is space-shooting, tower-defense, ridiculous-weapon-filled Android game.";
   textMapping["SATVocabImage"] = "Android SAT Vocab app with a hand picked set of high priority words. Includes fun two player competition, and automatically generated study lists.";
   textMapping["JavaGameControllerImage"] = "A Java based developer library allowing one to harness three virtual controllers displayed on up to four Android devices. Connection established via bluetooth.";
 

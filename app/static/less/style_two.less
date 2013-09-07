@@ -182,15 +182,17 @@ p{
    left: 10px;
    height:(2*@previewRadius);
    width: (2*@previewRadius);
-   border:@previewBorderSize solid @themeThree;
+   box-shadow:0 0 0 4px @themeThree, 0 0 0 4px @themeThree;
 }
+
+
 
 .center_preview_image_text_div{
    .Round;
    position: absolute;
    z-index: 6;
-   top:10px;
-   left: 10px;
+   top:5px;
+   left: 5px;
    height:(2*@previewRadius);
    width: (2*@previewRadius);
    background-image:@backgroundTexture;
@@ -666,7 +668,17 @@ body{ height: 100%; padding: 0; margin: 0; //
   padding: @spanPadding;
   font-family: @spanFont;
   font-size: @spanFontSize;
-  text-align: center;
+  text-align: left;
+  display: inline-block;
+  background-color: green;
+  border: 2px dotted yellow;
+}
+.centered{
+ margin: auto;
+ display: block;
+}
+.center_align{
+  text-align: center !important;
 }
 
 .span_2{
@@ -692,6 +704,12 @@ body{ height: 100%; padding: 0; margin: 0; //
 }
 .span_10{
   width: 10*@unitWidth;
+  display: inline-block;
+  .SpanSettings;
+}
+.span_11
+{
+ width: 12*@unitWidth;
   display: inline-block;
   .SpanSettings;
 }
@@ -778,6 +796,7 @@ body{ height: 100%; padding: 0; margin: 0; //
 .caption{
   font-family: "cantarellregular";
   margin-bottom: 5px;
+  max-width: 200px;
 }
 .blog_section_title{
       display: block;
@@ -1239,22 +1258,36 @@ body{ height: 100%; padding: 0; margin: 0; //
 }
 
 //*Writing//
+
+/* Projects */
+.writing_preview{
+  position: relative;
+  opacity: 1;
+  background-color: rgba(0,0,0,0.6);
+  font-family: 'cantarellregular';
+  width: 600px;
+  height: 200px;
+  margin: auto;
+  border-radius: 3px;
+  margin-bottom: 35px;
+  .LightShadow;
+}
+
 .writing_preview_text{
   opacity: 1;
   z-index:2;
-  background-color: rgba(255,255,255,0.6);
+  background-color: rgba(0,0,0,0.6);
   color: white;
   font-family: 'cantarellregular';
   width: 600px;
-  height: 300px;
+  height: 200px;
   margin: auto;
   border-radius: 3px;
   position: absolute;
-
+  font-size: 22px;
 }
 .writng_preview_text .writing_preview_text_p{
-  color: blue;
-  font-size: 20px;
+  font-size: 32px;
   font-family: "cantarellregular"
   }
 
