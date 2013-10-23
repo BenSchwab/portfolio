@@ -51,7 +51,7 @@
    <h3 class = "admin_label_black">Preview:</h3>
    {{ form.preview(id = 'blog_preview_text_area') }}
     <h3 class = "admin_label_black">Published:</h3>
-   {{form.published(value = current_blog.published)}}
+   {{form.published()}}
    <h3 class = "admin_label_black">Comments</h3>
    <div class = "admin_comment_div">
          {% for comment in current_blog.commments %}

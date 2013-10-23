@@ -134,12 +134,15 @@ def adminBlogEdit(post_id = 1):
         #continue editing hereself.
        #b = BlogPost(blogTitle = form.title.data, date= datetime.now(), content=form.content.data, preview=form.preview.data, published=form.published.data, views=0, previewImage="../static/images/seattle.jpg" )
        #db.session.add(b)
-      # pdb.set_trace()
+       pdb.set_trace()
        blog.blogTitle = form.title.data
        blog.content = form.content.raw_data[0]
        blog.preview = form.preview.raw_data[0]
        blog.published = form.published.label.text
 
+       print form.published.data
+       print form.published.data
+       print form.published.data
        print blog.content
        print blog.preview
        print blog.published
